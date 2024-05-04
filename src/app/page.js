@@ -6,8 +6,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import axios from "axios";
 import Link from "next/link";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function Home() {
   const [fetched_datasets, setFetched_datasets] = useState([]);
@@ -20,13 +20,11 @@ export default function Home() {
   const [selected_dataset_url, setSelected_dataset_url] = useState("");
   const [selected_dataset_repo, setSelected_dataset_repo] = useState("");
 
-
-
   const DataSetFetch = async () => {
     try {
       setLoading_fetch(true);
       const response = await axios.get(
-        "http://127.0.0.1:8000/search_datasets",
+        "https://top-jenica-healix-96dbffa5.koyeb.app/search_datasets",
         {
           params: {
             dataset_name: text_data, // Pass dataset_name as a query parameter
@@ -35,30 +33,33 @@ export default function Home() {
       );
       setFetched_datasets(response.data.datasets);
       console.log(response.data.datasets);
-      settext_data("")
+      settext_data("");
     } catch (error) {
-      settext_data("")
+      settext_data("");
       console.error(error);
-    }finally{
-      settext_data("")
+    } finally {
+      settext_data("");
       setLoading_fetch(false);
     }
   };
 
-  const AddDataSet = async (url,index) => {
+  const AddDataSet = async (url, index) => {
     try {
       setLoading_add({ ...loading_add, [index]: true });
-      const response = await axios.get("http://127.0.0.1:8000/load_dataset/", {
-        params: {
-          dataset_url: url, // Pass dataset_name as a query parameter
-        },
-      });
-      set_code_output_text(response.data);
-      toast("Dataset has been added successfully!")
+      const response = await axios.get(
+        "https://top-jenica-healix-96dbffa5.koyeb.app/load_dataset/",
+        {
+          params: {
+            dataset_url: url, // Pass dataset_name as a query parameter
+          },
+        }
+      );
+      // set_code_output_text(response.data);
+      toast("Dataset has been added successfully!");
       console.log(response);
     } catch (error) {
       console.error(error);
-    }finally{
+    } finally {
       setLoading_add({ ...loading_add, [index]: false });
     }
   };
@@ -67,7 +68,7 @@ export default function Home() {
     try {
       setLoading_send(true);
       const response = await axios.get(
-        "http://127.0.0.1:8000/chat_with_data/",
+        "https://top-jenica-healix-96dbffa5.koyeb.app/chat_with_data/",
         {
           params: {
             prompt: prompt,
@@ -80,33 +81,38 @@ export default function Home() {
       console.log(response);
     } catch (error) {
       console.error(error);
-    }finally{
+    } finally {
       setLoading_send(false);
+      set_prompt("");
     }
   };
 
   return (
     <>
       <div className="flex">
-        <div className="ml-10 mt-5 w-[25rem] h-[46rem] rounded-xl bg-zinc-900">
+        <div className="ml-10 mt-5 w-[25rem] h-[45rem] rounded-xl bg-zinc-900">
           <input
             placeholder="Search your data"
             value={text_data}
-            className="outline-none w-[22rem] ml-5 mt-10 h-[2.5rem] rounded-lg p-4 bg-neutral-600 text-[#959595]"
+            className="outline-none w-[20rem] ml-7 mt-10 h-[2.5rem] rounded-lg p-4 bg-neutral-600 text-[#959595]"
             onChange={(e) => settext_data(e.target.value)}
           />
           <h1 className="ml-5 mt-10 text-white text-xl">Datasets</h1>
           {fetched_datasets.map((dataset, index) => (
             <div
               key={index}
-              className=" w-[22rem]  ml-5 mt-5 h-[3.5rem] bg-neutral-600 rounded-lg  border-l-4 border-blue-500 text-white flex  p-4"
+              className=" w-[22rem]  ml-7 mt-5 h-[3.5rem] bg-neutral-600 rounded-lg  border-l-4 border-blue-500 text-white flex  p-4"
             >
               <p className="">
                 {dataset.repo.substring(dataset.repo.lastIndexOf("/") + 1)}
               </p>
               <button
-                onClick={() =>{ AddDataSet(dataset.fullurl,index);setSelected_dataset_url(dataset.fullurl);setSelected_dataset_repo(dataset.repo)}}
-                disabled = {loading_add[index]}
+                onClick={() => {
+                  AddDataSet(dataset.fullurl, index);
+                  setSelected_dataset_url(dataset.fullurl);
+                  setSelected_dataset_repo(dataset.repo);
+                }}
+                disabled={loading_add[index]}
                 className="ml-5 bg-blue-500 text-white rounded-lg w-20"
               >
                 {loading_add[index] ? "Loading..." : "Add Data"}
@@ -116,18 +122,32 @@ export default function Home() {
 
           <button
             onClick={DataSetFetch}
-            className="w-[22rem] ml-5 mt-10 h-[2.5rem] rounded-lg bg-blue-500 text-white"
+            className="w-[20rem] ml-7 mt-10 h-[2.5rem] rounded-lg bg-blue-500 text-white"
             disabled={loading_fetch}
           >
             {loading_fetch ? "loading..." : "Search Datasets"}
           </button>
         </div>
-        <div className=" ml-10 mt-5 h-[46rem] w-[75rem] bg-zinc-900 rounded-3xl overflow-auto">
+        <div className=" ml-10 mt-5 h-[45rem] w-[65rem] bg-zinc-900 rounded-3xl overflow-auto">
           <div className="flex">
-            <div className="text-white text-2xl ml-5 mt-5">{selected_dataset_repo}</div>
-            <div className="text-white flex  ml-[25rem] mt-5">
-              <Link href={selected_dataset_url} target="_blank" className="hover:cursor-pointer mr-10">Inspect data</Link>
-              <Link href="http://127.0.0.1:8000/static/my_notebook.ipynb" target="_blank" className="hover:cursor-pointer">Export File</Link>{" "}  
+            <div className="text-white text-2xl ml-5 mt-5">
+              {selected_dataset_repo}
+            </div>
+            <div className="text-white flex  ml-[15rem] mt-5">
+              <Link
+                href={selected_dataset_url}
+                target="_blank"
+                className="hover:cursor-pointer mr-10 hover:text-blue-500"
+              >
+                Inspect data
+              </Link>
+              <Link
+                href="http://127.0.0.1:8000/static/my_notebook.ipynb"
+                target="_blank"
+                className="hover:cursor-pointer hover:text-blue-500"
+              >
+                Export File
+              </Link>{" "}
               <svg
                 class="w-6 h-6 text-gray-800 ml-2 dark:text-white"
                 aria-hidden="true"
@@ -157,9 +177,7 @@ export default function Home() {
             </div>
             <div className="mt-[5.5rem] ml-3 text-2xl font-bold">YOU</div>
           </div>
-          <p className="ml-[18.3rem] text-[1.5rem] text-white">
-            {prompt_send}
-          </p>
+          <p className="ml-[18.3rem] text-[1.5rem] text-white">{prompt_send}</p>
           <div className="flex text-white">
             <div className="ml-[14rem] mt-[5rem] ">
               <img
@@ -173,48 +191,55 @@ export default function Home() {
             </div>
           </div>
           <p className="ml-[18.3rem] text-[1.5rem] text-white">
-          {code_output_text.text}
+            {code_output_text.text}
           </p>
           <div className="ml-[18.3rem] mt-5 w-[40rem] h-[10rem] bg-teal-200 rounded-lg text-[1.5rem] p-4 text-pink-400 overflow-auto">
-          {code_output_text.output == "imageToSaved.png" ? (
-                <img src="http://127.0.0.1:8000/static/imageToSaved.png" />
-              ) : (
-               <span><h1>Output :</h1> <h2> {code_output_text.output}</h2></span> 
-              )}
+            {code_output_text.output == "imageToSaved.png" ? (
+              <img src="http://127.0.0.1:8000/static/imageToSaved.png" />
+            ) : (
+              <span>
+                <h1>Output :</h1> <code> {code_output_text.output}</code>
+              </span>
+            )}
           </div>
+          <div className="flex mt-40 ml-40">
           <input
             value={prompt_send}
             onChange={(e) => set_prompt(e.target.value)}
             placeholder="Let's Chat"
-            className="outline-none w-[42rem] ml-60 mt-20 h-[2.5rem] rounded-lg p-4 bg-white text-black"
+            className="outline-none w-[42rem]  h-[2.5rem] rounded-lg p-4 bg-white text-black"
           />
           <button
-            className="ml-2 bg-blue-500 pl-7  rounded-lg w-20 h-[2.5rem]"
+            className="ml-2 bg-blue-500 pl-7  rounded-lg w-20 h-[2.5rem] text-white"
             onClick={() => StartConversation(code_output_text, prompt_send)}
             disabled={loading_send}
           >
-            {loading_send ? "Loading..." :<svg
-              class="w-6 h-6 text-gray-800 dark:text-white"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              fill="none"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke="white"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M19 12H5m14 0-4 4m4-4-4-4"
-              />             </svg>}
+            {loading_send ? (
+              "Loading..."
+            ) : (
+              <svg
+                class="w-6 h-6 text-gray-800 dark:text-white"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke="white"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M19 12H5m14 0-4 4m4-4-4-4"
+                />{" "}
+              </svg>
+            )}
           </button>
+          </div>
           <ToastContainer />
         </div>
       </div>
-
-     
     </>
   );
 }
