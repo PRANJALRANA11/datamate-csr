@@ -1,36 +1,85 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# [dataMate](https://github.com/PRANJALRANA11/datamate) 💬📊
 
-## Getting Started
 
-First, run the development server:
 
+DataMate is your  data assistant. A conversational interface for your data where you can load, clean, transform, and visualize without a single line of code.
+
+## Demo
+
+https://github.com/PRANJALRANA11/datamate/assets/129268721/29098247-4e6a-4d56-8f35-0f70eac88411
+
+
+Note: Demo above is `Gemini-pro/vision`, which sends the conversation to Google AI API. . Model can hallucinates answer or even can produce bugs
+
+
+
+### ⇒ *[Try it now! Hosted public environment is live! (Click Here)](pranjalrana11.github.io/datamate-csr/)* ⇐
+
+
+
+
+## Features
+- [x] Persistent Juptyer kernel backend for data manipulation during conversation
+- [x] Natural language chat, visualizations/plots, and direct download of data assets
+- [x] Load multiple tables directly into the chat
+- [x] Search for data and load CSVs directly from github
+- [x] Export data as html file
+- [ ] WIP: Rollback kernel state when undo ~using `criu`~ (re-execute all cells)
+- [ ] TODO: Support for more data sources (e.g. SQL, S3, PySpark etc.)
+
+
+## Things you can ask DataMate
+- [x] Load data from a URL
+- [x] Clean data by removing duplicates, nulls, outliers, etc.
+- [x] Join data from multiple tables into a single output table
+- [x] Visualize data with plots and charts
+- [x] Ask whatever you want to your very own  code-interpreter
+
+## Quickstart
+
+To install locally.
+
+### 1. Clone the repository
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/PRANJALRANA11/datamate-csr
+```
+###  2. Create a branch
+```bash
+git checkout -b temp
+```
+### 3. Install dependancies
+```bash
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 4. Run the app and access it on localhost:3000
+```bash
+npm run dev
+```
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
-## Learn More
 
-To learn more about Next.js, take a look at the following resources:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
 
-## Deploy on Vercel
+## Contributions
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Contributions are welcome! Feel free to submit a PR or open an issue.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+
+
+### Technologies used in the project:
+
+  Nextjs
+  TailwindCss
+  Shadcn/UI
+
+### 🛡️ License
+
+This project is licensed under the MIT
+
+
+
+
